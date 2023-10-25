@@ -1,38 +1,30 @@
 #include "main.h"
-#include <stdio.h>
-#include <stdlib.h>
-
-int _putchar(char c);
 
 /**
- * print_number - like a hello world
- *
- * @n: params an integer
- *
- * No return
+ * wildcmp - Compare strings
+ * @s1: pointer to string params
+ * @s2: pointer to string params
+ * Return: 0
  */
 
-
-void print_number(int n)
+int wildcmp(char *s1, char *s2)
 {
-
-	unsigned int n1 = 0;
-
-	if  (n < 0)
+	if (*s1 == '\0')
 	{
-		n1 = -n;
-		_putchar('-');
+		if (*s2 != '\0' && *s2 == '*')
+		{
+			return (wildcmp(s1, s2 + 1));
+		}
+		return (*s2 == '\0');
 	}
 
-	else
+	if (*s2 == '*')
 	{
-		n1 = n;
+		return (wildcmp(s1 + 1, s2) || wildcmp(s1, s2 + 1));
 	}
-
-	if (n1 / 10)
+	else if (*s1 == *s2)
 	{
-		print_number(n1 / 10);
+		return (wildcmp(s1 + 1, s2 + 1));
 	}
-
-	_putchar((n1 % 10) + '0');
+	return (0);
 }
