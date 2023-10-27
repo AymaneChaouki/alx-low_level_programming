@@ -1,44 +1,54 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 /**
- * main - prints the minimum number of coins to make change for an amount of
- * money.
- * @argc: number of arguments passed to the function.
- * @argv: array of arguments passed to the function.
+ * main - Prints the minimum number of coins to
+ *        make change for an amount of money.
+ * @argc: The number of arguments supplied to the program.
+ * @argv: An array of pointers to the arguments.
  *
- * Return: 0 if no errors, else 1
+ * Return: If the number of arguments is not exactly one - 1.
+ *         Otherwise - 0.
  */
-
-int main(int argc, char **argv)
+int main(int argc, char *argv[])
 {
-	int i, sum = 0;
+	int cents, coins = 0;
 
 	if (argc != 2)
 	{
 		printf("Error\n");
 		return (1);
 	}
-	if (atoi(argv[1]) < 0)
+
+	cents = atoi(argv[1]);
+
+	while (cents > 0)
 	{
-		printf("0\n");
-		return (0);
+		coins++;
+		if ((cents - 25) >= 0)
+		{
+			cents -= 25;
+			continue;
+		}
+		if ((cents - 10) >= 0)
+		{
+			cents -= 10;
+			continue;
+		}
+		if ((cents - 5) >= 0)
+		{
+			cents -= 5;
+			continue;
+		}
+		if ((cents - 2) >= 0)
+		{
+			cents -= 2;
+			continue;
+		}
+		cents--;
 	}
-	for (i = 0; atoi(argv[1]) > 0; i++)
-	{
-		if (atoi(argv[1]) >= 25)
-			atoi(argv[1]) -= 25;
-		else if (atoi(argv[1]) >= 10)
-			atoi(argv[1]) -= 10;
-		else if (atoi(argv[1]) >= 5)
-			atoi(argv[1]) -= 5;
-		else if (atoi(argv[1]) >= 2)
-			atoi(argv[1]) -= 2;
-		else
-			atoi(argv[1]) -= 1;
-		sum++;
-	}
-	printf("%d\n", sum);
+
+	printf("%d\n", coins);
+
 	return (0);
 }
