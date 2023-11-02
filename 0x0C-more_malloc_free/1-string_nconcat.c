@@ -1,65 +1,53 @@
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-
+#include <stdlib.h>
+#include "main.h"
 /**
- * _strlen - The Function
- * @s:  The variable
- * Return: The Return value/void
+ * _strlen - calculate and return string length
+ * @string: string
+ * Return: string length
  */
-unsigned int	_strlen(char *s)
+int _strlen(char *string)
 {
-	unsigned int	i;
+	int i;
 
-	i = 0;
-	while (s[i])
-	{
-		i++;
-	}
+	for (i = 0; string[i] != '\0'; i++)
+		;
 	return (i);
 }
-
 /**
- * string_nconcat - The Function
- * @s1: The variable
- * @s2: The variable
- * @n: The variable
- * Return: The Return value/void
-*/
-
-char	*string_nconcat(char *s1, char *s2, unsigned int n)
+ * string_nconcat - concatenate s1 and n bytes of s2; return ptr to string
+ * @s1: string 1
+ * @s2: string 2
+ * @n: n bytes to concat from string 2
+ * Return: pointer to concatenated string
+ */
+char *string_nconcat(char *s1, char *s2, unsigned int n)
 {
-	unsigned int	i;
-	unsigned int	j;
-	unsigned int	len1;
-	unsigned int	len2;
-	char			*concat;
+	char *ptr;
+	int num, len, i, j;
 
-	len1 = 0;
-	len2 = 0;
-	if (!s1)
+	num = n;
+
+	if (s1 == NULL) /* account for NULL strings */
 		s1 = "";
-	if (!s2)
+	if (s2 == NULL)
 		s2 = "";
-	len1 = _strlen(s1);
-	len2 = _strlen(s2);
-	if (n >= len2)
-		n = len2;
-	concat = malloc(sizeof(char) * (len1 + n + 1));
-	if (!concat)
+	if (num < 0) /* account for negative n bytes */
 		return (NULL);
-	i = 0;
-	while (s1[i])
-	{
-		concat[i] = s1[i];
-		i++;
-	}
-	j = 0;
-	while (s2[j] && j < n)
-	{
-		concat[i + j] = s2[j];
-		j++;
-	}
-	concat[i + j] = '\0';
-	return (concat);
+	if (num >= _strlen(s2)) /* account for n too big */
+		num = _strlen(s2);
+
+	len = _strlen(s1) + num + 1; /* +1 to account for null pointer */
+
+	ptr = malloc(sizeof(*ptr) * len); /* malloc and check for error */
+	if (ptr == NULL)
+		return (NULL);
+
+	for (i = 0; s1[i] != '\0'; i++) /* concat */
+		ptr[i] = s1[i];
+	for (j = 0; j < num; j++)
+		ptr[i + j] = s2[j];
+	ptr[i + j] = '\0';
+
+	return (ptr);
 }
