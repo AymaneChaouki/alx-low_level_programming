@@ -8,9 +8,6 @@
  *       written in the 0x14-file_io directory.
  */
 
-#ifndef MAIN_H
-#define MAIN_N
-
 #include <elf.h>
 #include <stdlib.h>
 #include <stdio.h>
